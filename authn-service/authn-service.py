@@ -54,7 +54,8 @@ def get_user_profile(access_token):
 
 @app.route("/authenticate/<code>")
 def authenticate(code):
-    app.logger.debug("Received authentication request with code: %s", code)
+    sanitized_code = code.replace('\r\n', '').replace('\n', '')
+    app.logger.debug("Received authentication request with code: %s", sanitized_code)
     access_info, error = get_access_token(code)
 
     if error:
